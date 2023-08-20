@@ -8,6 +8,7 @@ import { RiThumbUpFill, RiThumbDownFill } from "react-icons/ri";
 import { BsCheck } from "react-icons/bs";
 import { AiOutlinePlus } from "react-icons/ai";
 import { BiChevronDown } from "react-icons/bi";
+import {BASE_URL} from "../apiDetails/constants";
 import video from "../assets/video.mp4";
 import { firebaseAuth } from "../firebase/firebaseConfig";
 import { useDispatch } from "react-redux";
@@ -17,6 +18,7 @@ export default React.memo(function Card({ movieData, isLiked = false }) {
   const [isHovered, setIsHovered] = useState(false);
   const [email, setEmail] = useState(undefined);
   const navigate = useNavigate();
+  
   onAuthStateChanged(firebaseAuth, (currentUser) => {
     if (currentUser) {
       setEmail(currentUser.email); // email = firebase email
@@ -26,7 +28,7 @@ export default React.memo(function Card({ movieData, isLiked = false }) {
   });
   const addToList = async () => {
     try {
-      await axios.post("http://localhost:5000/api/user/add/", {
+      await axios.post(`${BASE_URL}/api/user/add/`, {
         email,
         data: movieData,
       });
